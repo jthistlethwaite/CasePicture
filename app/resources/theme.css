@@ -1,0 +1,14 @@
+footer {
+    padding: 1em;
+    background: #5D5D5D;
+}
+
+body {
+    background: #3D3D3D;
+    color: #eeeeee;
+}
+
+body div.well {
+    background: #4D4D4D;
+    border-color: #6E6E6E;
+}

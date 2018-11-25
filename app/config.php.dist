@@ -1,0 +1,102 @@
+<?php
+/**
+ * @author Jason Thistlethwaite (jason.thistlethwaite@gmail.com)
+ * @version 2.0
+ * @license BSD 3-Clause
+ *
+ * This config file is used to control various settings about the takePicture tool.
+ *
+ * Create a copy of it named config.php in the same directory as index.php and edit to your liking.
+ *
+ *
+ * Copyright 2016 - 2018 Jason Thistlethwaite
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+ * following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ * disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
+/*
+ * Beginning part of the file name
+ *
+ * Files are saved as: <prefix>_YYYY-MM-DD_x.jpg
+ */
+$prefix = isset($_REQUEST['prefix']) && !empty($_REQUEST['prefix']) ? trim($_REQUEST['prefix']) : null;
+
+/*
+ * Local part where pictures will be saved
+ *
+ */
+$saveFolder = dirname(__FILE__). '/pictures/';
+
+/*
+ * Secondary directory where a copy of pictures should be stored
+ *
+ * WHAT THIS IS REALLY FOR:
+ *
+ *  In actual production, this is often a remote filesystem like Amazon S3 mounted with fusefs.
+ *
+ *  In a typical deployment, this is what's happening:
+ *
+ *  1) takePicture is installed on the LAN, for bandwidth reasons
+ *
+ *  2) Pictures taken are saved to the local server, and then uploaded to the remote mount later
+ *
+ */
+$localUploadDir = dirname(__FILE__). '/uploadDir/';
+
+
+/*
+ * URL where picture sets can be accessed from outside the local LAN
+ *
+ */
+$urlBase = 'http://marksmanpics.s3-website.us-east-2.amazonaws.com/';
+
+
+/*
+* Default suffix for the saved pictures; increments for additional pictures with the same prefix and timestamp
+*/
+$suffix = 1;
+
+/*
+ * Determines the type of input field for prefix on mobile devices
+ *
+ * Text should be fine for low-volume use cases or with barcode scanners
+ *
+ * In cases where users will be typing in numeric prefixes, it's better to change this to number
+ */
+$mobilePrefixMode = 'text';
+
+/*
+ * Default resolution for the webcam when none is specified in the URI
+ *
+ * NOTE: if the resolution passed is not supported by the camera, the user will encounter
+ *       an error message and the camera will not work. If this happens, the user can change
+ *       to a supported resolution using the drop-down box in the corner of the page.
+ *
+ * Tested-values include:
+ *
+ *  1280x720
+ *  1920x1080
+ *
+ *  3264x2448
+ *      - tested with an IPSOS document camera
+ *
+ */
+$defaultResolution = '3264x2448';
