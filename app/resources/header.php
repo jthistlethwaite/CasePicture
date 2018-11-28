@@ -6,5 +6,13 @@
     <link href="resources/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="resources/theme.css" rel="stylesheet" />
 	<link href="resources/themes/dark/style.css" rel="stylesheet" />
+
+    <script src="resources/checkbox_shift.js"></script>
+
+    <script>
+        $(document).ready(function () {
+           shiftCheckboxes();
+        });
+    </script>
 </head>
 <body>

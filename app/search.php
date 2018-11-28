@@ -32,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 			include_once 'forms/search.php';
 
+			$selectAll = isset($_REQUEST['selectAll']) ? true : false;
+
 			$fileList = array();
 			$searchTerms = isset($_REQUEST['searchTerms']) ? array_filter($_REQUEST['searchTerms']) : array('*');
 
@@ -60,9 +62,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 					? "pictures/thumbs/$fileName"
 					: "pictures/$fileName";
 
+
+				/*
+				 * This can be used to set all pictures checked by default
+				 *
+				 * This is used by the "package pictures" feature on the desktop page
+				 */
+				$checked = '';
+				if ($selectAll) {
+					$checked = 'checked';
+				}
+
 				$tableRows .= "<tr>".
 					"<td>".
-						"<input type='checkbox' class='form-control' name='selectFiles[]' value='$fileName' />".
+						"<input type='checkbox' class='form-control chkbox' name='selectFiles[]' value='$fileName' $checked />".
 					"</td>".
 					"<td><a href='pictures/$fileName'><img src='$imgUrl' width='100' /></a></td>".
 					"<td>$fileName</td>".

@@ -254,17 +254,43 @@
 
                     <div class="container-fluid well well-sm">
 
-                        <h4>Timed / Handsfree Pictures</h4>
+                        <div class="col-sm-6">
 
-                        <label>
-                            Seconds Delay: <input class="form-control" type="number" id="snapDelay" placeholder="Delay between snapshots..." value="5" />
-                        </label>
-                        <label>
-                            Number of Pictures: <input class="form-control" type="number" id="shotCount" value="4" />
-                        </label>
+                            <h4>Timed / Handsfree Pictures</h4>
 
-                        <button class='btn btn-success' onClick="takeTimedShots()">Take Timed Pictures</button>
+                            <label>
+                                Seconds Delay: <input class="form-control" type="number" id="snapDelay" placeholder="Delay between snapshots..." value="5" />
+                            </label>
+                            <label>
+                                Number of Pictures: <input class="form-control" type="number" id="shotCount" value="4" />
+                            </label>
+                            <button class='btn btn-success btn-lg' onClick="takeTimedShots()">
+                                <span class="glyphicon glyphicon-time"></span><br>
+                                Take Timed Pictures
+                            </button>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <h4>Misc Tools</h4>
+                            <button class="btn btn-info btn-lg" onClick="packagePictures();">
+                                <span class="glyphicon glyphicon-save"></span><br>
+                                Package Current Pictures
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+
+
+
                     </div>
+
+
+
+                    <form method="POST" id="packageForm" action="search.php?action=search">
+                        <input name="searchTerms[]" value="" id="searchPrefix" type="hidden" />
+                        <input type="hidden" name="selectAll" value="true" />
+                    </form>
+                    <br><br><br>
+
                 </div>
 
 
@@ -292,6 +318,19 @@
     <script>
 
     var shutter = new Audio("shutter.ogg");
+
+    function packagePictures()
+    {
+        var packagePrefix = $('#prefix').val();
+
+        console.log(packagePrefix);
+
+        $('#searchPrefix').val(packagePrefix);
+
+        $('#packageForm').submit();
+
+
+    }
 
     function clearPreviews()
     {
