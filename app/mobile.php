@@ -127,8 +127,14 @@ EOT;
 
         $access_url = $urlBase . $safePrefix. '/'. $fileSaved['name'];
 
+        fwrite($fh, "Notify picture?\n");
         if (function_exists('notify_picture')) {
+            fwrite($fh, "Attempting notify....\n");
+
+
             notify_picture($fileSaved['name'], $prefix, null, $access_url);
+        } else {
+            fwrite($fh, "notify_picture undefined\n");
         }
     }
 
