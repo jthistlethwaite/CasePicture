@@ -44,7 +44,7 @@ if (!is_file('config.php')) {
     die("Config file 'config.php' not found. Make a copy of config.php.dist and edit as-needed");
 }
 
-require_once 'config.php'
+require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
