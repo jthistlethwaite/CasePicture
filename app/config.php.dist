@@ -100,3 +100,17 @@ $mobilePrefixMode = 'text';
  *
  */
 $defaultResolution = '3264x2448';
+
+/*
+ * Remove all whitespace (space, tab, etc) from picture prefixes
+ *
+ * This is generally desired for tracking numbers, ticket ids, invoice, etc where some misconfigured barcode
+ * scanners may add spaces or tabs after certain prefixes
+ *
+ */
+$stripPrefixWhitespace = true;
+
+
+if ($stripPrefixWhitespace == true) {
+    $prefix = preg_replace('/\s+/', '', $prefix);
+}
