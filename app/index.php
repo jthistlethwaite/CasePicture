@@ -161,6 +161,7 @@
 <html>
     <head>
         <script src="webcam.min.js"></script>
+        <script src="resources/shortcut.min.js"></script>
 	<title>CasePicture</title>
 	<script src="resources/jquery-2.2.0.min.js"></script>
 	<link href="resources/bootstrap.css" rel="stylesheet" />
@@ -414,6 +415,10 @@
         
         console.log(resolution);
     }
+
+    shortcut.add("space", function() {
+       take_snapshot();
+    }, {"disable_in_input": true});
 
 <?php
 

@@ -5,6 +5,12 @@
 // Based on JPEGCam: http://code.google.com/p/jpegcam/
 // Copyright (c) 2012 - 2017 Joseph Huckaby
 // Licensed under the MIT License
+//
+//
+// Changelog:
+//
+// 2018-12-19 ~ Jason Thistlethwaite
+// 	- Added specific warning about using a higher resolution than the camera supports
 
 (function(window) {
 var _userMedia;
@@ -63,7 +69,7 @@ var Webcam = {
 		unfreeze_snap: true,    // Whether to unfreeze the camera after snap (defaults to true)
 		iosPlaceholderText: 'Click here to open camera.',
 		user_callback: null,    // callback function for snapshot (used if no user_callback parameter given to snap function)
-		user_canvas: null       // user provided canvas for snapshot (used if no user_canvas parameter given to snap function)
+		user_canvas: null,       // user provided canvas for snapshot (used if no user_canvas parameter given to snap function)
 	},
 
 	errors: {
@@ -575,6 +581,15 @@ var Webcam = {
 			} else {
 				message = "Could not access webcam: " + args[0].name + ": " + 
 					args[0].message + " " + args[0].toString();
+			}
+
+			var resolution = this.params["dest_width"] + "x" + this.params["dest_height"];
+
+			if (args[0].name == "OverconstrainedError") {
+				alert("Selected resolution " + resolution + " is not support by your camera");
+				// alert("Too big");
+
+				return false;
 			}
 
 			// default error handler if no custom one specified
