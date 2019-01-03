@@ -436,11 +436,15 @@
 
        $('#resolutionSelect').val("<?php echo $resolution; ?>");
 
-	$('#prefix').click( function() {
-		$(this).select();
-	});
+        $('#prefix').click( function() {
+            $(this).select();
+        });
 
-	$('#prefix').focus().select();
+        var startingPrefix = $('#prefix').val();
+
+        if (startingPrefix.length == 0) {
+            $('#prefix').focus().select();
+        }
 
     });
 
