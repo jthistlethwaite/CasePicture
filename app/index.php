@@ -36,6 +36,61 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+
+        if ($action == 'checkin') {
+            $accountNo = !empty($_REQUEST['accountNo']) ? $_REQUEST['accountNo'] : '';
+            $order_id = !empty($_REQUEST['order_id']) ? $_REQUEST['order_id'] : '';
+            $length = !empty($_REQUEST['length']) ? $_REQUEST['length'] : '';
+            $width = !empty($_REQUEST['width']) ? $_REQUEST['width'] : '';
+            $height = !empty($_REQUEST['height']) ? $_REQUEST['height'] : '';
+            $weight = !empty($_REQUEST['weight']) ? $_REQUEST['weight'] : '';
+
+            // header("Content-type: application/json");
+
+            $response = [
+                "success" => false,
+                "serverTime" => date("Y-m-d H:i:s")
+            ];
+
+            if ($prefix != '') {
+                $csv = fopen($checkinCsv, "a");
+
+                if (fputcsv($csv, [
+                    $prefix,
+                    $accountNo,
+                    $order_id,
+                    $length,
+                    $width,
+                    $height,
+                    $weight,
+                    date("Y-m-d H:i:s")
+                ])) {
+                    $response["success"] = true;
+                } else {
+                    $response["error"] = "Failed to write to checkin log.";
+                }
+
+                fclose($csv);
+                
+            }
+
+            
+
+            echo json_encode($response);
+
+
+
+            // print_r($response);
+
+            // ob_end_clean();
+
+            exit;            
+        }
+
+
+
+
         $fh = fopen("php://stderr", "w");
 
         $filename = basename($prefix. '_'. date("Y-m-d"));
@@ -235,6 +290,29 @@
                     <div class="col-xs-8">
                         <input type="text" placeholder="Picture Prefix..." id="prefix" class="form-control" style="font-size: 1.25em; margin-bottom: 1em; height: 2.5em;" value="<?php echo $prefix; ?>" />
 
+                        <?php
+
+                        if ($checkinEnabled) {
+                        ?>
+
+                        <div id="checkinFields">
+                            <h4>Checkin Details</h4>
+                            <input class="form-control" name="accountNo" id="accountNo" placeholder="Account..." />
+                            <input class="form-control" name="order_id" id="order_id" placeholder="Order id..." />
+                            <input class="form-control" name="weight" id="weight" placeholder="weight" />
+                            <input class="form-control" name="length" id="length" placeholder="length" />
+                            <input class="form-control" name="width" id="width" placeholder="width" />
+                            <input class="form-control" name="height" id="height" placeholder="height" />
+
+                            
+                        </div>
+                        <?php
+
+                        }
+
+                        ?>
+
+
                         <p class="small">
                             All pictures will be saved as <i>prefix</i>_<i><?php echo date("Y-m-d"); ?>_##.jpg</i>
                         </p>
@@ -245,6 +323,10 @@
                             <h3><span class="glyphicon glyphicon-picture"></span></h3>
                             Take Snapshot
 
+                        </button>
+
+                        <button onClick="checkin()" class="btn btn-success btn-lg pull-right">
+                            Record Checkin
                         </button>
                     </div>
                     <div class="clearfix"></div>
@@ -355,7 +437,42 @@
             loopDelay += delay;
         }
     }
-    
+
+    function checkin()
+    {
+            var prefix = document.getElementById('prefix').value;
+
+            var order_id = document.getElementById('order_id').value;
+            var weight = document.getElementById('weight').value;
+            var accountNo = document.getElementById('accountNo').value;
+            var length = document.getElementById('length').value;
+            var width = document.getElementById('width').value;
+            var height = document.getElementById('height').value;
+
+            $.post("/index.php?action=checkin"
+                + "&prefix=" + prefix 
+                + "&order_id=" + order_id
+                + "&accountNo=" + accountNo
+                + "&length=" + length
+                + "&width=" + width
+                + "&height=" + height,
+                function (response) {
+                    if (response.success == true) {
+                        alert("Checkin log saved");
+                    }
+
+                    console.log(response);
+            }, 'json').done( function () {
+                // alert("Done");
+            }).fail( function (a, b, c) {
+                alert("Failed");
+
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            }) ;      
+    }
+
     function take_snapshot() {
         Webcam.snap ( function(data_uri) {
 
@@ -365,9 +482,22 @@
 
             var prefix = document.getElementById('prefix').value;
 
-            Webcam.upload( data_uri, 'index.php?prefix=' + prefix, function (responseCode, rawResponse) {
-                // console.log(responseCode);
-                // console.log(rawResponse);
+            var order_id = document.getElementById('order_id').value;
+            var weight = document.getElementById('weight').value;
+            var accountNo = document.getElementById('accountNo').value;
+            var length = document.getElementById('length').value;
+            var width = document.getElementById('width').value;
+            var height = document.getElementById('height').value;
+
+            Webcam.upload( data_uri, 'index.php?prefix=' + prefix
+                // + "&order_id=" + order_id
+                // + "&accountNo=" + accountNo,
+                // + "&length=" + length,
+                // + "&width=" + width,
+                // + "&height=" + height    
+                , function (responseCode, rawResponse) {
+                console.log(responseCode);
+                console.log(rawResponse);
 			if (responseCode == 200) {
 			    
 			    console.log(rawResponse);

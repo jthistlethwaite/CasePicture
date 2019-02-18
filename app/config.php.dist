@@ -46,6 +46,16 @@ $prefix = isset($_REQUEST['prefix']) && !empty($_REQUEST['prefix']) ? trim($_REQ
 $saveFolder = dirname(__FILE__). '/pictures/';
 
 /*
+ * If enabled, allows user to provide and save information about received packages, like weight and dimensions
+*/
+$checkinEnabled = false;
+
+/*
+ * Checkin CSV
+*/
+$checkinCsv = 'checkin_log.csv';
+
+/*
  * Secondary directory where a copy of pictures should be stored
  *
  * WHAT THIS IS REALLY FOR:
