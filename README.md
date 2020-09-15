@@ -22,6 +22,15 @@ CasePicture is a simple tool for capturing a high volume of photographs and keep
       3. For the "download zip" functionality, you will need the PHP Zip extension enabled
 3. Start taking pictures.
 
+## Fast Mobile Switching QR Code
+
+In some environments it may be useful to switch from the screen on a computer to a handheld
+device like a phone.
+
+To do this, make sure to run composer install to bring in the necessary libraries. Once
+done, you will see a QR code in the bottom left of the main application. Scanning it will
+quickly take a phone or other device to the picture tool.
+
 ## Considerations
 
 CasePicture is intended to be used as an appliance on a LAN. Ideally, it should be installed on a system with some kind of redundant storage and a fast local connection. That way, there is little or no lag in saving high-quality pictures and videos.

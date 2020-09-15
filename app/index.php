@@ -27,6 +27,8 @@
  *
  */
 
+		require_once 'includes.php';
+
     if (!is_file('config.php')) {
         die("Config file 'config.php' not found. Make a copy of config.php.dist and edit as-needed");
     }
@@ -176,6 +178,7 @@
 			<a class="btn btn-primary" href="search.php?action=search"><span class="glyphicon glyphicon-search"></span> Search &amp; Download Pictures</a>
             <a class="btn btn-info" href="mobile.php"><span class="glyphicon glyphicon-phone"></span> Mobile Mode</a>
 		</div>
+
 		<div class="pull-right">
 
 		    <form onSubmit="configCamera(); return false" id="camSettings">
@@ -226,6 +229,25 @@
                         Take Snapshot
 
                     </button>
+
+										<br>
+
+										<div class="well well-sm">
+
+												<div class="col-xs-4">
+													<strong>Fast Mobile Switch</strong>
+												</div>
+
+												<div class="col-xs-8">
+
+													<img style="max-width: 1.25in;" src="/qr.php?prefix=<?php echo $prefix; ?>" />
+
+												</div>
+
+												<div class="clearfix"></div>
+
+										</div>
+
                 </div>
             </div>
             <div class="col-xs-8" id="rControls">

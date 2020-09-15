@@ -40,6 +40,8 @@
  *
  */
 
+require_once 'includes.php';
+
 if (!is_file('config.php')) {
     die("Config file 'config.php' not found. Make a copy of config.php.dist and edit as-needed");
 }
@@ -161,7 +163,7 @@ EOT;
 
             <label style="width: 100%">
                 Prefix:
-                <input name="prefix" class="form-control" placeholder="File prefix..." type="<?php echo $mobilePrefixMode; ?>" id="scanner" />
+                <input name="prefix" class="form-control" placeholder="File prefix..." type="<?php echo $mobilePrefixMode; ?>" value="<?php echo $prefix;  ?>" id="scanner" />
             </label><br>
 
 
